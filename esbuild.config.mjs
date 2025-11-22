@@ -1,6 +1,8 @@
 import esbuild from "esbuild";
 import process from "process";
 import builtins from 'builtin-modules'
+import fs from "fs";
+import path from "path";
 
 const banner =
 	`/*
@@ -50,5 +52,18 @@ esbuild.build({
 	logLevel: "info",
 	sourcemap: prod ? false : 'inline',
 	treeShaking: true,
-	outfile: 'main.js',
+	outfile: 'build/main.js',
+}).then(() => {
+	// Copy manifest.json and styles.css to build directory
+	const filesToCopy = ['manifest.json', 'styles.css'];
+	filesToCopy.forEach(file => {
+		const srcPath = path.join(process.cwd(), file);
+		const destPath = path.join(process.cwd(), 'build', file);
+		if (fs.existsSync(srcPath)) {
+			fs.copyFileSync(srcPath, destPath);
+			console.log(`Copied ${file} to build/`);
+		} else {
+			console.warn(`Warning: ${file} not found, skipping copy`);
+		}
+	});
 }).catch(() => process.exit(1));

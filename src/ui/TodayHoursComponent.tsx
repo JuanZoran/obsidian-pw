@@ -19,10 +19,10 @@ export function TodayHoursComponent({
 }: TodayHoursComponentProps) {
   return (
     <div className="pw-today-hours-container">
-      <h3>Today's Hours</h3>
+      <h3>今日工作时段</h3>
       <div className="pw-today-hours-inputs">
         <div className="pw-today-hours-input">
-          <label>Start:</label>
+          <label>开始：</label>
           <input 
             type="time" 
             value={startTime} 
@@ -30,7 +30,7 @@ export function TodayHoursComponent({
           />
         </div>
         <div className="pw-today-hours-input">
-          <label>End:</label>
+          <label>结束：</label>
           <input 
             type="time" 
             value={endTime} 
@@ -44,7 +44,7 @@ export function TodayHoursComponent({
             onEndTimeChange(defaultEndHour);
           }}
         >
-          Reset to Default
+          重置为默认
         </button>
       </div>
     </div>

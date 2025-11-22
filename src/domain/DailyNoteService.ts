@@ -2,12 +2,16 @@ import { App, TFile } from "obsidian";
 import { DateTime } from "luxon";
 
 export class DailyNoteService {
-	constructor(private app: App) {}
+	constructor(private app: App, private folderOverride?: string) {}
 
 	/**
 	 * Get the daily notes folder path from settings
 	 */
 	private getDailyNotesFolder(): string {
+		if (this.folderOverride && this.folderOverride.trim() !== "") {
+			return this.folderOverride.trim();
+		}
+
 		// Access Obsidian's daily notes plugin settings
 		const dailyNotesSettings = (this.app as any).internalPlugins?.plugins?.[
 			"daily-notes"

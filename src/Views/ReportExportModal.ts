@@ -29,12 +29,12 @@ export class ReportExportModal extends Modal {
 		const { contentEl } = this;
 		contentEl.addClass("pw-export-modal");
 
-		contentEl.createEl("h2", { text: "Export Report" });
+		contentEl.createEl("h2", { text: "导出报告" });
 
 		// Date Range Settings
 		new Setting(contentEl)
-			.setName("Start Date")
-			.setDesc("Beginning of report period")
+			.setName("开始日期")
+			.setDesc("报告周期起始")
 			.addText((text) =>
 				text
 					.setValue(
@@ -51,8 +51,8 @@ export class ReportExportModal extends Modal {
 			);
 
 		new Setting(contentEl)
-			.setName("End Date")
-			.setDesc("End of report period")
+			.setName("结束日期")
+			.setDesc("报告周期结束")
 			.addText((text) =>
 				text
 					.setValue(
@@ -70,10 +70,8 @@ export class ReportExportModal extends Modal {
 
 		// Include tasks with no dates
 		new Setting(contentEl)
-			.setName("Include Tasks with No Dates")
-			.setDesc(
-				"Include tasks that don't have due dates or completion dates"
-			)
+			.setName("包含无日期任务")
+			.setDesc("包含没有到期或完成日期的任务")
 			.addToggle((toggle) =>
 				toggle
 					.setValue(this.config.includeTasksWithNoDates)
@@ -84,8 +82,8 @@ export class ReportExportModal extends Modal {
 
 		// Include notes
 		new Setting(contentEl)
-			.setName("Include Notes")
-			.setDesc("Include subtasks and notes")
+			.setName("包含笔记")
+			.setDesc("包含子任务与说明")
 			.addToggle((toggle) =>
 				toggle.setValue(this.config.includeNotes).onChange((value) => {
 					this.config.includeNotes = value;
@@ -95,7 +93,7 @@ export class ReportExportModal extends Modal {
 		// Submit button
 		new Setting(contentEl).addButton((button) =>
 			button
-				.setButtonText("Export to Clipboard")
+				.setButtonText("复制报告到剪贴板")
 				.setCta()
 				.onClick(() => {
 					this.onSubmit(this.config);

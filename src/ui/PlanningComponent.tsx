@@ -49,7 +49,8 @@ export function PlanningComponent({deps, settings, app}: PlanningComponentProps)
   const setPlanningSettings = PlanningSettingsStore.decorateSetterWithSaveSettings(setPlanningSettingsState);
   const { searchParameters, hideEmpty, wipLimit } = planningSettings;
 	const fileOperations = new FileOperations(settings);
-  const dailyNoteService = React.useMemo(() => new DailyNoteService(app), [app]);
+  const createDailyNoteService = () =>
+    new DailyNoteService(app, settings.dailyTodoFolder || undefined);
   
   // Default working hours
   const defaultStartHour = settings.defaultStartHour || "08:00";
@@ -203,7 +204,7 @@ export function PlanningComponent({deps, settings, app}: PlanningComponentProps)
   // Handler for single date columns
   const handleSingleDateClick = (date: DateTime) => {
     return () => {
-      dailyNoteService.createOrOpenDailyNote(date);
+      createDailyNoteService().createOrOpenDailyNote(date);
     };
   };
 
@@ -215,7 +216,7 @@ export function PlanningComponent({deps, settings, app}: PlanningComponentProps)
         startDate,
         endDate,
         (selectedDate: DateTime) => {
-          dailyNoteService.createOrOpenDailyNote(selectedDate);
+          createDailyNoteService().createOrOpenDailyNote(selectedDate);
         }
       );
       modal.open();
@@ -240,7 +241,7 @@ export function PlanningComponent({deps, settings, app}: PlanningComponentProps)
 
     yield todoColumn(
       "◻️",
-      "Todo",
+      "待办",
       getTodosByDateAndStatus(today, tomorrow, [TodoStatus.Todo]),
       false,
       moveToDateAndStatus(today, TodoStatus.Todo),
@@ -249,7 +250,7 @@ export function PlanningComponent({deps, settings, app}: PlanningComponentProps)
       
     yield todoColumn(
       "⏩",
-      "In progress",
+      "进行中",
       getTodosByDateAndStatus(today, tomorrow, [TodoStatus.AttentionRequired, TodoStatus.Delegated, TodoStatus.InProgress]),
       false,
       moveToDateAndStatus(today, TodoStatus.InProgress),
@@ -258,7 +259,7 @@ export function PlanningComponent({deps, settings, app}: PlanningComponentProps)
 
     yield todoColumn(
       "✅",
-      "Done",
+      "已完成",
       getTodosByDateAndStatus(today, tomorrow, [TodoStatus.Canceled, TodoStatus.Complete]),
       false,
       moveToDateAndStatus(today, TodoStatus.Complete),
@@ -278,7 +279,7 @@ export function PlanningComponent({deps, settings, app}: PlanningComponentProps)
   function* getColumns() {
     yield todoColumn(
       "📃",
-      "Backlog",
+      "积压",
       getTodosWithNoDate(),
       false,
       removeDate());
@@ -286,7 +287,7 @@ export function PlanningComponent({deps, settings, app}: PlanningComponentProps)
     const today = DateTime.now().startOf("day")
 		yield todoColumn(
       "🕸️",
-      "Past",
+      "过期",
       getTodosByDate(null, today).filter(
         todo => todo.status !== TodoStatus.Canceled && todo.status !== TodoStatus.Complete),
       true);
@@ -302,7 +303,10 @@ export function PlanningComponent({deps, settings, app}: PlanningComponentProps)
       if (!settings.showWeekEnds && localDay >= 6) {
         continue
       }
-      const label = i === 0 ? "Tomorrow" : bracketStart.toFormat("cccc dd/MM")
+      const label =
+        i === 0
+          ? "明日"
+          : bracketStart.setLocale("zh").toFormat("cccc dd/MM");
       const todos = getTodosByDate(bracketStart, bracketEnd);
       const style = getWipStyle(todos);
       yield todoColumn(
@@ -318,7 +322,12 @@ export function PlanningComponent({deps, settings, app}: PlanningComponentProps)
     for (let i = 1; i < 5; i++) {
       bracketStart = bracketEnd
       bracketEnd = bracketStart.plus({ weeks: 1 })
-      const label = `Week +${i} (${bracketStart.toFormat("dd/MM")} - ${bracketEnd.minus({ days: 1 }).toFormat("dd/MM")})`;
+      const label = `未来第${i}周 (${bracketStart.setLocale("zh").toFormat(
+        "dd/MM"
+      )} - ${bracketEnd
+        .minus({ days: 1 })
+        .setLocale("zh")
+        .toFormat("dd/MM")})`;
       const todos = getTodosByDate(bracketStart, bracketEnd)
       const style = getWipStyle(todos);
       yield todoColumn(
@@ -334,7 +343,12 @@ export function PlanningComponent({deps, settings, app}: PlanningComponentProps)
     for (let i = 1; i < 4; i++) {
       bracketStart = bracketEnd
       bracketEnd = bracketStart.plus({ months: 1 })
-      const label = `Month +${i} (${bracketStart.toFormat("dd/MM")} - ${bracketEnd.minus({ days: 1 }).toFormat("dd/MM")})`
+      const label = `未来第${i}月 (${bracketStart.setLocale("zh").toFormat(
+        "dd/MM"
+      )} - ${bracketEnd
+        .minus({ days: 1 })
+        .setLocale("zh")
+        .toFormat("dd/MM")})`;
       const todos = getTodosByDate(bracketStart, bracketEnd);
       const style = getWipStyle(todos);
       yield todoColumn(
@@ -349,7 +363,7 @@ export function PlanningComponent({deps, settings, app}: PlanningComponentProps)
 
     yield todoColumn(
       "📅",
-      "Later",
+      "更远",
       getTodosByDate(bracketStart, null),
       hideEmpty,
       moveToDate(bracketStart),
@@ -361,7 +375,7 @@ export function PlanningComponent({deps, settings, app}: PlanningComponentProps)
           bracketStart,
           bracketStart.plus({ months: 6 }), // 6 months range
           (selectedDate: DateTime) => {
-            dailyNoteService.createOrOpenDailyNote(selectedDate);
+            createDailyNoteService().createOrOpenDailyNote(selectedDate);
           }
         );
         modal.open();

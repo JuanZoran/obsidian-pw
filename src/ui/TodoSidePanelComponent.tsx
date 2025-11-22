@@ -65,11 +65,11 @@ export function TodoSidePanelComponent({deps}: TodoSidePanelComponentProps) {
   }
 
   return <div className="pw-todo-panel">
-    <b>Selected:</b>
+    <b>已选：</b>
     <TodoListComponent displayPreferences={displayPreferences} todos={getSelectedTodos(todos)} deps={deps}/>
-    <b>Due:</b>
+    <b>到期：</b>
     <TodoListComponent displayPreferences={displayPreferences} todos={getDueTodos(todos)} deps={deps}/>
-    <b>All:</b>
+    <b>全部：</b>
     <TodoListComponent displayPreferences={displayPreferences} todos={todos} deps={deps}/>
   </div>
 }

@@ -19,7 +19,7 @@ export class ProletarianWizardSettingsTab extends PluginSettingTab {
 
 	toggleError(spanFolderError: HTMLSpanElement, on: boolean) {
 		if (on) {
-			spanFolderError.innerText = "This folder doesn't exist!";
+			spanFolderError.innerText = "该文件夹不存在！";
 		} else {
 			spanFolderError.innerText = "";
 		}
@@ -62,7 +62,7 @@ export class ProletarianWizardSettingsTab extends PluginSettingTab {
 
 		if (this.plugin.settings.ignoredFolders.length === 0) {
 			containerEl
-				.createEl("div", { text: "No folders are being ignored." })
+				.createEl("div", { text: "当前没有忽略的文件夹。" })
 				.addClass("pw-no-ignored-folders");
 			return;
 		}
@@ -80,7 +80,7 @@ export class ProletarianWizardSettingsTab extends PluginSettingTab {
 			const removeButton = new ButtonComponent(item);
 			removeButton
 				.setIcon("trash")
-				.setTooltip("Remove")
+				.setTooltip("移除")
 				.onClick(async () => {
 					this.plugin.settings.ignoredFolders.remove(folder);
 					await this.plugin.saveSettings();
@@ -94,11 +94,11 @@ export class ProletarianWizardSettingsTab extends PluginSettingTab {
 
 		containerEl.empty();
 
-		new Setting(containerEl).setName("Planning").setHeading();
+		new Setting(containerEl).setName("规划").setHeading();
 
 		new Setting(containerEl)
-			.setName("Daily WIP limit")
-			.setDesc("Default daily limit for work in process")
+			.setName("默认每日工作中任务上限")
+			.setDesc("工作中任务的默认每日上限")
 			.addText((txt) =>
 				txt
 					.setValue(
@@ -113,18 +113,18 @@ export class ProletarianWizardSettingsTab extends PluginSettingTab {
 					})
 			);
 
-		new Setting(containerEl).setName("Ignore").setHeading();
+		new Setting(containerEl).setName("忽略").setHeading();
 
 		// Ignored folders section
 		const ignoredFoldersSection = containerEl.createEl("div");
 		ignoredFoldersSection.addClass("pw-ignored-folders-section");
 
 		new Setting(ignoredFoldersSection)
-			.setName("Ignored folders")
-			.setDesc("Folders from which you don't want todos")
+			.setName("忽略的文件夹")
+			.setDesc("在这些文件夹中不扫描 todo")
 			.addButton((button) => {
 				button
-					.setButtonText("Add folder")
+					.setButtonText("添加文件夹")
 					.setCta()
 					.onClick(() => {
 						this.showFolderSelectionModal();
@@ -147,8 +147,8 @@ export class ProletarianWizardSettingsTab extends PluginSettingTab {
 		];
 
 		new Setting(containerEl)
-			.setName("First weekday")
-			.setDesc("Specify the first weekday weekend filtering")
+			.setName("每周起始日")
+			.setDesc("指定用于区分周末的第一工作日")
 			.addDropdown((dropDown) => {
 				days.forEach((display, index) =>
 					dropDown.addOption((index + 1).toString(), display)
@@ -163,8 +163,8 @@ export class ProletarianWizardSettingsTab extends PluginSettingTab {
 			});
 
 		new Setting(containerEl)
-			.setName("Show weekend in planning")
-			.setDesc("Should weekend days be displayed in the planning view")
+			.setName("在规划中显示周末")
+			.setDesc("规划视图是否显示周末")
 			.addToggle((toggle) =>
 				toggle
 					.setValue(this.plugin.settings.showWeekEnds)
@@ -175,8 +175,8 @@ export class ProletarianWizardSettingsTab extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
-			.setName("Ignore archived todo")
-			.setDesc("Ignore todos in file under archive folder")
+			.setName("忽略归档中的 todo")
+			.setDesc("忽略归档文件夹下的 todo")
 			.addToggle((toggle) =>
 				toggle
 					.setValue(this.plugin.settings.ignoreArchivedTodos)
@@ -186,12 +186,12 @@ export class ProletarianWizardSettingsTab extends PluginSettingTab {
 					})
 			);
 
-		new Setting(containerEl).setName("Attributes").setHeading();
+		new Setting(containerEl).setName("属性").setHeading();
 
 		new Setting(containerEl)
-			.setName("Use Dataview Syntax")
+			.setName("启用 Dataview 语法")
 			.setDesc(
-				"Default (off) is @due(2025-01-01). When turned on, syntax becomes [due:: 2025-01-01]"
+				"默认使用 @due(2025-01-01)。开启后语法变为 [due:: 2025-01-01]"
 			)
 			.addToggle((toggle) =>
 				toggle
@@ -203,8 +203,8 @@ export class ProletarianWizardSettingsTab extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
-			.setName("Due date attribute")
-			.setDesc("Attribute to set a todo due date")
+			.setName("到期日属性")
+			.setDesc("用于设置 todo 到期日的属性")
 			.addText((toggle) =>
 				toggle
 					.setValue(this.plugin.settings.dueDateAttribute)
@@ -219,8 +219,8 @@ export class ProletarianWizardSettingsTab extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
-			.setName("Completed date attribute")
-			.setDesc("Attribute to set a todo completed date")
+			.setName("完成日期属性")
+			.setDesc("用于设置 todo 完成日期的属性")
 			.addText((toggle) =>
 				toggle
 					.setValue(this.plugin.settings.completedDateAttribute)
@@ -235,8 +235,8 @@ export class ProletarianWizardSettingsTab extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
-			.setName("Selected attribute")
-			.setDesc("Attribute to selected a todo")
+			.setName("选中属性")
+			.setDesc("用于标记 todo 为今日选中的属性")
 			.addText((toggle) =>
 				toggle
 					.setValue(this.plugin.settings.selectedAttribute)
@@ -251,8 +251,8 @@ export class ProletarianWizardSettingsTab extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
-			.setName("Track start time")
-			.setDesc("Track when todo was moved to 'In progress'")
+			.setName("记录开始时间")
+			.setDesc("记录 todo 移入“进行中”时所在的时间")
 			.addToggle((toggle) =>
 				toggle
 					.setValue(this.plugin.settings.trackStartTime)
@@ -264,8 +264,8 @@ export class ProletarianWizardSettingsTab extends PluginSettingTab {
 			);
 
 		const startedAttribute = new Setting(containerEl)
-			.setName("Started attribute")
-			.setDesc("Attribute to track the started date of a todo")
+			.setName("开始日期属性")
+			.setDesc("用于追踪 todo 开始日期的属性")
 			.addText((toggle) =>
 				toggle
 					.setValue(this.plugin.settings.startedAttribute)
@@ -280,11 +280,24 @@ export class ProletarianWizardSettingsTab extends PluginSettingTab {
 			)
 			.setDisabled(!this.plugin.settings.trackStartTime);
 
-		new Setting(containerEl).setName("Progress Tracking").setHeading();
+		new Setting(containerEl).setName("进度追踪").setHeading();
 
 		new Setting(containerEl)
-			.setName("Default start hour")
-			.setDesc("Default start hour for daily progress tracking")
+			.setName("规划代办文件夹")
+			.setDesc("填写规划界面中点击代办时新建的今日文件所存放的文件夹，可留空使用默认每日笔记设置")
+			.addText((text) =>
+				text
+					.setPlaceholder("例如 Daily Notes/Today")
+					.setValue(this.plugin.settings.dailyTodoFolder || "")
+					.onChange(async (value) => {
+						this.plugin.settings.dailyTodoFolder = value.trim();
+						await this.plugin.saveSettings();
+					})
+			);
+
+		new Setting(containerEl)
+			.setName("默认开始时间")
+			.setDesc("用于每日工作进度追踪的默认起始时间")
 			.addText((text) =>
 				text
 					.setPlaceholder("08:00")
@@ -296,8 +309,8 @@ export class ProletarianWizardSettingsTab extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
-			.setName("Default end hour")
-			.setDesc("Default end hour for daily progress tracking")
+			.setName("默认结束时间")
+			.setDesc("用于每日工作进度追踪的默认结束时间")
 			.addText((text) =>
 				text
 					.setPlaceholder("17:00")
@@ -309,10 +322,8 @@ export class ProletarianWizardSettingsTab extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
-			.setName("Display today's progress bar")
-			.setDesc(
-				"Show a progress bar representing today's progress in working hours"
-			)
+			.setName("显示今日进度条")
+			.setDesc("显示表示今日工作进度的进度条")
 			.addToggle((toggle) =>
 				toggle
 					.setValue(

@@ -56,12 +56,12 @@ export function TodoStatusComponent({todo, deps, settings, playSound}: TodoSatus
       return
     }
     const menu = new Menu()
-    addChangeStatusMenuItem(menu, TodoStatus.Todo, "◻️ Mark as todo")
-    addChangeStatusMenuItem(menu, TodoStatus.Complete, "✔️ Mark as complete")
-    addChangeStatusMenuItem(menu, TodoStatus.InProgress, "⏩ Mark as in progress")
-    addChangeStatusMenuItem(menu, TodoStatus.AttentionRequired, "❗ Mark as attention required")
-    addChangeStatusMenuItem(menu, TodoStatus.Delegated, "👬 Mark as delegated")
-    addChangeStatusMenuItem(menu, TodoStatus.Canceled, "❌ Mark as cancelled")
+    addChangeStatusMenuItem(menu, TodoStatus.Todo, "◻️ 标记为待办")
+    addChangeStatusMenuItem(menu, TodoStatus.Complete, "✔️ 标记为完成")
+    addChangeStatusMenuItem(menu, TodoStatus.InProgress, "⏩ 标记为进行中")
+    addChangeStatusMenuItem(menu, TodoStatus.AttentionRequired, "❗ 标记为需关注")
+    addChangeStatusMenuItem(menu, TodoStatus.Delegated, "👬 标记为委派")
+    addChangeStatusMenuItem(menu, TodoStatus.Canceled, "❌ 标记为取消")
     menu.showAtMouseEvent(evt)
     evt.preventDefault();
   }

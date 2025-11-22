@@ -16,7 +16,7 @@ export class TodoReportView extends ItemView {
   }
 
   getDisplayText(): string {
-    return 'Report';
+    return '报告';
   }
 
   getIcon(): string {

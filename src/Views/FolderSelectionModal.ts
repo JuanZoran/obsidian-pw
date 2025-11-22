@@ -50,7 +50,7 @@ export class FolderSelectionModal extends Modal {
 		const { contentEl } = this;
 		contentEl.empty();
 
-		contentEl.createEl("h2", { text: "Select a folder to ignore" });
+		contentEl.createEl("h2", { text: "请选择要忽略的文件夹" });
 
 		// Create folder list
 		const folderList = contentEl.createEl("div");
@@ -62,7 +62,7 @@ export class FolderSelectionModal extends Modal {
 
 		const searchInput = searchContainer.createEl("input", {
 			type: "text",
-			placeholder: "Search folders...",
+			placeholder: "搜索文件夹...",
 		});
 		searchInput.addClass("pw-folder-search-input");
 
@@ -90,7 +90,7 @@ export class FolderSelectionModal extends Modal {
 		);
 
 		if (filteredFolders.length === 0) {
-			containerEl.createEl("div", { text: "No matching folders found." });
+			containerEl.createEl("div", { text: "未找到匹配的文件夹。" });
 			return;
 		}
 

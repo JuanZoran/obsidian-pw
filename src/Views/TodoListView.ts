@@ -20,7 +20,7 @@ export class TodoListView extends ItemView {
   }
 
   getDisplayText(): string {
-    return 'Todo';
+    return '待办';
   }
 
   getIcon(): string {

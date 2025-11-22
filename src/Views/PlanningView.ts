@@ -22,7 +22,7 @@ export class PlanningView extends ItemView {
 
   static viewType: string = "pw.planning";
   getViewType() { return PlanningView.viewType }
-  getDisplayText() { return "Todo planning" }
+  getDisplayText() { return "任务规划" }
 
   render() {
     this.deps.logger.info(`Rendering planning view`)

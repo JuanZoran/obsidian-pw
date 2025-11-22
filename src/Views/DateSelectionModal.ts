@@ -24,9 +24,11 @@ export class DateSelectionModal extends Modal {
 		const { contentEl } = this;
 
 		contentEl.createEl("h2", {
-			text: `Select Date (${this.startDate.toFormat(
-				"MMM d"
-			)} - ${this.endDate.toFormat("MMM d, yyyy")})`,
+			text: `选择日期 (${this.startDate
+				.setLocale("zh")
+				.toFormat("MMM d")} - ${this.endDate
+				.setLocale("zh")
+				.toFormat("MMM d, yyyy")})`,
 		});
 
 		// Generate list of dates in range
@@ -44,8 +46,8 @@ export class DateSelectionModal extends Modal {
 		});
 
 		dates.forEach((date) => {
-			const dateButton = dateContainer.createEl("button", {
-				text: date.toFormat("cccc, MMMM d"),
+				const dateButton = dateContainer.createEl("button", {
+				text: date.setLocale("zh").toFormat("cccc, MMMM d"),
 				cls: "pw-date-selection-button",
 			});
 
@@ -68,7 +70,7 @@ export class DateSelectionModal extends Modal {
 		// Submit button
 		new Setting(contentEl).addButton((button) =>
 			button
-				.setButtonText("Create Daily Note")
+				.setButtonText("创建日记")
 				.setCta()
 				.onClick(() => {
 					this.onDateSelected(this.selectedDate);

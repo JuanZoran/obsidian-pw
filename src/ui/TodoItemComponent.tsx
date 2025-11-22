@@ -141,7 +141,7 @@ export function TodoItemComponent({todo, deps, playSound, dontCrossCompleted, di
       return
     }
     menu.addItem((item) => {
-      item.setTitle(`${otherIcon} Change priority to ${name}`)
+      item.setTitle(`${otherIcon} 更改优先级为 ${name}`)
       item.setIcon(icon)
       item.onClick((evt) => {
 				fileOperations.updateAttributeAsync(todo, "priority", name).then()
@@ -161,13 +161,13 @@ export function TodoItemComponent({todo, deps, playSound, dontCrossCompleted, di
     addChangePriorityMenuItem(menu, "low", "down-chevron-glyph", "🔽")
     addChangePriorityMenuItem(menu, "lowest", "double-down-arrow-glyph", "⏬")
     menu.addItem((item) => {
-      item.setTitle("🔁 Reset priority")
+      item.setTitle("🔁 重置优先级")
       item.setIcon("reset")
       item.onClick((evt) => fileOperations.removeAttributeAsync(todo, "priority").then())
     })
     menu.addSeparator()
     menu.addItem((item) => {
-      item.setTitle("📌 Toggle selected")
+      item.setTitle("📌 切换已选")
       item.setIcon("pin")
       item.onClick((evt) => {
 				fileOperations.updateAttributeAsync(todo, settings.selectedAttribute, !todo.attributes[settings.selectedAttribute])

@@ -96,7 +96,7 @@ export function PlanningTodoColumn({icon, title, planningSettings, onTodoDropped
         {/* Selected todos section - displayed at the top */}
         {hasSelectedTodos && (
           <>
-            <div className="pw-planning-subsection-title">📌 Selected</div>
+            <div className="pw-planning-subsection-title">📌 已选</div>
             <TodoListComponent 
               deps={deps}
               todos={selectedTodos}
@@ -121,7 +121,7 @@ export function PlanningTodoColumn({icon, title, planningSettings, onTodoDropped
         {hasDelegatedTodos && (
           <>
             {hasRegularTodos && <div className="pw-planning-subsection-divider"></div>}
-            <div className="pw-planning-subsection-title">👬 Delegated</div>
+            <div className="pw-planning-subsection-title">👬 委派</div>
             <TodoListComponent 
               deps={deps}
               todos={delegatedTodos}

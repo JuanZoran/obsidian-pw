@@ -70,7 +70,12 @@ function findTodoCompletionDate(todo: TodoItem<TFile>, settings: ProletarianWiza
 
 function formatInterval(from: DateTime, to: DateTime) {
   const format = from.year === DateTime.now().year ? "LLL dd" : "yyyy LLL dd";
-  return `${from.toFormat(format)} to ${to.plus({days: -1}).toFormat(format)}`;
+  return `${from
+    .setLocale("zh")
+    .toFormat(format)} 至 ${to
+    .plus({ days: -1 })
+    .setLocale("zh")
+    .toFormat(format)}`;
 }
 
 function getOneWeekFrom(startDate: DateTime): DateContainer {
@@ -136,8 +141,8 @@ function groupTodos(todos: TodoItem<TFile>[], containers: DateContainer[], setti
     });
   });
   const emptyContainer: Container = {
-    title: "No date",
-    todos: todos.filter(todo => !findTodoCompletionDate(todo, settings)),
+    title: "未指定日期",
+    todos: todos.filter((todo) => !findTodoCompletionDate(todo, settings)),
   };
   (containers as Container[]).push(emptyContainer);
   return containers
@@ -214,12 +219,12 @@ export function TodoReportComponent({deps}: TodoReportComponentProps) {
         await TodoExporter.exportToClipboard(todos, config, deps.settings);
         
         // Show success message
-        const message = `Report with ${filteredTodos.length} tasks exported to clipboard!`;
+        const message = `已将包含 ${filteredTodos.length} 个任务的报告复制到剪贴板！`;
         
         new Notice(message);
       } catch (error) {
         console.error("Failed to export report:", error);
-        new Notice("Failed to export report. See console for details.");
+        new Notice("导出报告失败，详情请查看控制台。");
       }
     };
     
@@ -229,13 +234,13 @@ export function TodoReportComponent({deps}: TodoReportComponentProps) {
 
   return <div className="pw-report">
     <div className="pw-report-header">
-      <h1><span className="pw-planning-today-icon">✅</span> Completed todos</h1>
+      <h1><span className="pw-planning-today-icon">✅</span> 已完成任务</h1>
       <div className="pw-report-actions">
         <button 
           className="pw-report-export-button" 
           onClick={handleExport}
         >
-          Export Report
+          导出报告
         </button>
       </div>
     </div>

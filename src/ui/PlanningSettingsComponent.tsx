@@ -67,18 +67,18 @@ export function PlanningSettingsComponent({setPlanningSettings, planningSettings
 
   return <div className="pw-planning--settings">
     <Pane display="flex" alignItems="center" marginX={majorScale(2)}>
-      <TextInput placeholder="Filter" onChange={onSearchChange} value={searchPhrase}/>
-      <Checkbox label="Fuzzy search" checked={fuzzySearch} onChange={onFuzzyClicked} />
+      <TextInput placeholder="筛选" onChange={onSearchChange} value={searchPhrase}/>
+      <Checkbox label="模糊搜索" checked={fuzzySearch} onChange={onFuzzyClicked} />
     </Pane>
     <Pane>
-      <Checkbox label="Show tags" checked={showTags} onChange={onShowTags} />
-      <Checkbox label="Show start time" checked={showStartTime} onChange={onShowStartTime} />
-      <Checkbox label="Hide empty containers" checked={hideEmpty} onChange={onHideEmptyClicked} />
+      <Checkbox label="显示标签" checked={showTags} onChange={onShowTags} />
+      <Checkbox label="显示开始时间" checked={showStartTime} onChange={onShowStartTime} />
+      <Checkbox label="隐藏空容器" checked={hideEmpty} onChange={onHideEmptyClicked} />
     </Pane>
     <Pane display="flex" alignItems="center">
-      <Checkbox label="WIP limit" checked={isLimited} onChange={onWipLimitActivatedChange} marginRight={minorScale(2)} marginBottom={0} marginTop={0}/>
+      <Checkbox label="WIP 限制" checked={isLimited} onChange={onWipLimitActivatedChange} marginRight={minorScale(2)} marginBottom={0} marginTop={0}/>
       <TextInput onChange={onDailyWipLimitChanged} value={dailyLimit} disabled={!isLimited} width="60px" marginRight={minorScale(2)}/>
-      <Text fontSize="12px" marginRight={minorScale(2)}>tasks / day</Text>
+      <Text fontSize="12px" marginRight={minorScale(2)}>任务 / 天</Text>
     </Pane>
   </div>;
 }

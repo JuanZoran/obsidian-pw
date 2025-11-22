@@ -1,99 +1,95 @@
-# Proletarian Wizard - Task Manager for Obsidian
+# 无产阶级巫师 - Obsidian 任务管理器
 
 [![CI](https://github.com/cfe84/obsidian-pw/workflows/CI/badge.svg)](https://github.com/cfe84/obsidian-pw/actions/workflows/ci.yml)
 [![Release](https://github.com/cfe84/obsidian-pw/workflows/Build%20obsidian%20plugin/badge.svg)](https://github.com/cfe84/obsidian-pw/actions/workflows/release.yml)
-[![License: GNU GPLv2](https://img.shields.io/badge/License-GPLv2-yellow.svg)](https://opensource.org/license/gpl-2-0)
+[![License: GNU GPLv2](https://img.shields.io/badge/License-GPLv2-yellow.svg)](https://opensource.org/license/gpl-2.0)
 
-_Track your tasks across all the notes in your workspace. Organize your day. Plan your work._
+_在整个笔记库中追踪任务。梳理一天的工作，规划待办。_
 
 ![logo](./doc/img/logo.png)
 
-## Table of Contents
+## 目录
 
--   [Overview](#overview)
--   [Installation](#installation)
--   [Quick Start](#quick-start)
--   [Manual](#manual)
--   [Development](#development)
--   [Contributing](#contributing)
+-   [概览](#概览)
+-   [安装](#安装)
+-   [快速上手](#快速上手)
+-   [使用说明](#使用说明)
+-   [开发](#开发)
+-   [参与贡献](#参与贡献)
 
-## Overview
+## 概览
 
-This is Proletarian Wizard's task board:
+这是无产阶级巫师的任务看板：
 
 ![Task board](./doc/img/board.jpg)
 
-Enter tasks directly in your notes. Everything goes together, you can keep your to-dos right at their source, alongside everything else. When you enter a todo, it magically appears in PW's task board.
+直接在笔记中输入任务，一切紧密结合，便于将待办项保留在内容原位。只要写下 todo，它就会神奇地出现在 PW 的任务看板中。
 
 ![Enter tasks directly in notes](./doc/img/tasks_in_notes.gif)
 
-The top thread panels allow you to track your day. You start by selecting the tasks you want to do, optionally prioritize them. Then as you work on them, you can change their status, and finally mark them done.
+上方的几个面板帮助你掌控当天进度。先挑选想完成的任务，并可选地调整优先级；工作过程中随时切换状态，最后标记完成。
 
 ![Organize your day](./doc/img/organize_day.gif)
 
-Updates are working in both directions. Changing tasks on the board updates them in your notes, and vice-versa. Click on a task to see it in its note.
+任务更新是双向同步的：看板上的改动会回写笔记，反之亦然。点击任务即可在对应笔记中定位。
 
 ![Updates are two-way](./doc/img/two_way_updates.gif)
 
-The panels below allow you to plan your work. When we get to that date, the tasks will automatically show up in the "Todo" column of today. If you don't complete tasks, they will show in a new panel called "Past". You can decide what to do with these later.
+下方的面板用于规划未来工作。到达设定日期时，任务会自动进入“今日 Todo”列；若未完成，则进入“过去”面板，留待日后处理。
 
 ![Plan your work](./doc/img/plan_work.gif)
 
-You can also use the auto-expand command (I recommend adding a hotkey, for example: alt+.) to replace natural language to an actual date (e.g. try _tomorrow_, _next monday_, or _next month_). Easier than having to calculate dates.
+也可以使用自动展开命令（建议绑定快捷键如 `Alt+.`）将自然语言转换为具体日期，例如试试 _tomorrow_、_next monday_ 或 _next month_，省却手动计算。
 
 ![Auto-expand due days](./doc/img/expand_due_date.gif)
 
-Produce a report of all the work you did, to help with status reports, and annual reviews.
+生成工作报告，辅助状态汇报或年度回顾。
 
 ![Annual report](./doc/img/report.gif)
 
-## Installation
+## 安装
 
-### From Obsidian Community Plugins
+### 通过 Obsidian 社区插件安装
 
-1. Open Obsidian Settings
-2. Go to **Community Plugins** and disable **Safe Mode**
-3. Click **Browse** and search for "Proletarian Wizard"
-4. Install and enable the plugin
+1. 打开 Obsidian 设置
+2. 进入 **社区插件** 并关闭 **安全模式**
+3. 点击 **浏览**，搜索 “Proletarian Wizard”
+4. 安装并启用插件
 
-### Manual Installation
+### 手动安装
 
-1. Download the latest release from [GitHub Releases](https://github.com/cfe84/obsidian-pw/releases)
-2. Extract the files to your vault's `.obsidian/plugins/proletarian-wizard/` folder
-3. Reload Obsidian and enable the plugin in settings
+1. 从 [GitHub Releases](https://github.com/cfe84/obsidian-pw/releases) 下载最新版本
+2. 解压到你的仓库 `.obsidian/plugins/proletarian-wizard/`
+3. 重载 Obsidian 并在设置中启用插件
 
-## Quick Start
+## 快速上手
 
-1. **Create your first todo** in any note:
+1. **在任意笔记中创建第一个 todo**：
 
     ```markdown
     -   [ ] My first task @due(2025-01-02)
     ```
 
-2. **Open the task board** using the command palette (`Ctrl+P` or `Cmd+P` on Mac):
+2. **通过命令面板打开任务看板**（Windows 用 `Ctrl+P`，Mac 用 `Cmd+P`）：
 
-    - Search for "Open Planning View"
-    - I advise using a shortcut to make this easier (I use `Ctrl+P` on Mac, `Alt+P` on PC)
+    - 搜索 “Open Planning View”
+    - 推荐绑定快捷键，比如我在 Mac 使用 `Ctrl+P`，PC 上用 `Alt+P`
 
-3. **Select tasks for today** by dragging on todos in the board
+3. **在看板上拖拽筛选今日任务**
+4. **边工作边更改任务状态以追踪进度**
+5. **提前规划**：为未来任务添加到期时间
+6. **使用属性**：`@due`、`@started`、`@completed`、`@priority` 以及 `#tag` 帮助分类
+7. **利用自动完成功能**：把 “Complete line attribute” 映射到 `@today` 转为 `@due(2025-01-02)` 或 `@critical` → `@priority(critical)`
 
-4. **Track progress** by changing task statuses as you work
+## 使用说明
 
-5. **Plan ahead** by adding due dates to future tasks
+### 入门
 
-6. **Use attributes** to sort your tasks: @due date, @started date, @completed date, @priority, and #tags.
+无产阶级巫师会自动扫描所有笔记中的 todo 条目，并在看板中汇总。只需用标准 Markdown 语法写入 todo，即可在插件界面看到。
 
-7. **Use autocomplete** to make input easier. Map command "Complete line attribute" to transform `@today` into `@due(2025-01-02)`, or `@critical` into `@priority(critical)`
+### Todo 语法
 
-## Manual
-
-### Getting Started
-
-Proletarian Wizard automatically scans all your notes for todo items and displays them in an organized task board. Simply create todos in your notes using standard Markdown syntax, and they'll appear in the plugin interface.
-
-### Todo Syntax
-
-#### Basic Todos
+#### 基础 Todo
 
 ```markdown
 -   [ ] This is a basic todo
@@ -101,20 +97,20 @@ Proletarian Wizard automatically scans all your notes for todo items and display
 -   [-] This is a cancelled todo
 ```
 
-#### Todo Statuses
+#### Todo 状态
 
-Proletarian Wizard supports multiple todo statuses beyond the basic complete/incomplete:
+PW 支持比完成/未完成更细化的状态：
 
--   `[ ]` - Todo (pending)
--   `[x]` - Complete
--   `[-]` - Canceled
--   `[>]` - In Progress
--   `[!]` - Attention Required
--   `[d]` - Delegated (waiting for someone else)
+-   `[ ]` - Todo（待办）
+-   `[x]` - 完成
+-   `[-]` - 取消
+-   `[>]` - 进行中
+-   `[!]` - 需要关注
+-   `[d]` - 委派（等待他人）
 
-#### Nested Todos (Subtasks)
+#### 嵌套 Todo（子任务）
 
-You can create subtasks by indenting todos:
+缩进即可创建子任务：
 
 ```markdown
 -   [ ] Main project task
@@ -125,11 +121,11 @@ You can create subtasks by indenting todos:
 -   [ ] Another main task
 ```
 
-### Attributes and Tags
+### 属性与标签
 
-#### Due Dates
+#### 期限日期
 
-Add due dates to your todos using the `@due()` attribute:
+用 `@due()` 为 todo 添加到期日期：
 
 ```markdown
 -   [ ] Review quarterly report @due(2023-12-31)
@@ -137,27 +133,27 @@ Add due dates to your todos using the `@due()` attribute:
 -   [ ] Weekly meeting @due(next monday)
 ```
 
-Use the `Complete line attribute` command to replace "tomorrow" or other text by the actual date.
+使用 `Complete line attribute` 命令将 “tomorrow” 之类的自然语言替换成具体日期。
 
-**Supported date formats:**
+**支持的日期格式：**
 
--   Exact dates: `2023-12-31`, `Dec 31, 2023`
--   Natural language: `tomorrow`, `next week`, `next monday`, `in 3 days`
--   Relative dates: `+7d` (7 days from now), `+2w` (2 weeks from now)
+-   精确日期：`2023-12-31`、`Dec 31, 2023`
+-   自然语言：`tomorrow`、`next week`、`next monday`、`in 3 days`
+-   相对日期：`+7d`（7 天后）、`+2w`（2 周后）
 
-#### Completion Dates
+#### 完成日期
 
-Track when tasks were completed using the `@completed()` attribute:
+通过 `@completed()` 跟踪任务完成时间：
 
 ```markdown
 -   [x] Finished project @completed(2023-12-20)
 ```
 
-When clicking the checkbox from the planner view, the completed attribute gets added automatically.
+在规划视图中勾选复选框会自动添加完成属性。
 
-#### Selection and Priority
+#### 选择与优先级
 
-Mark tasks as selected for today's work and set priority levels:
+标记任务为今日选中并设置优先级：
 
 ```markdown
 -   [ ] Important task @selected @priority(high)
@@ -165,288 +161,290 @@ Mark tasks as selected for today's work and set priority levels:
 -   [ ] Low priority task @priority(low)
 ```
 
-Marking a task as selected adds it to today automatically. This is useful if you want something to stay in today from one day to the next. It also appears in its own sub-section of the todo/in-progress sections, which you can use to identify them even more (e.g. task you're actually currently working on, vs. all in progress.)
+选中状态会将任务自动加入当日，也会在 todo/进行中面板中单独列出，便于区分（例如区分当前实际在做的任务和所有进行中的任务）。
 
-#### Custom Attributes
+#### 自定义属性
 
-You can add any custom attributes to your todos:
+可在 todo 上添加任意自定义属性：
 
 ```markdown
 -   [ ] Development task @project(website) @estimate(4h) @assigned(john)
 -   [ ] Meeting preparation @category(admin) @location(conference-room-a)
 ```
 
-#### Boolean Attributes
+#### 布尔属性
 
-For simple flags, you can use boolean attributes:
+用于简单标记：
 
 ```markdown
 -   [ ] Urgent task @urgent @blocking @important
 ```
 
-### Dataview Syntax (Optional)
+### Dataview 语法（可选）
 
-If you prefer Dataview syntax, you can enable it in settings and use:
+如果喜欢 Dataview 语法，可在设置中启用并使用：
 
 ```markdown
 -   [ ] Task with dataview syntax [due:: 2023-12-31] [priority:: high]
 ```
 
-### Due date using wikilinks (Optional)
+### 使用 wikilink 设置到期日（可选）
 
-You can also use wikilink syntax to set the due date. This is useful if you use daily notes, to link directly to that daily note.
+也可以用 wikilink 设置到期日，适合每天笔记直接链接：
 
 ```md
 -   [ ] Task with wikilink date [[2025-01-05]]
 ```
 
-If several dates are present for a todo, the latest is used as the due date. This can be useful if you want to keep track of all the days you worked on a task, and corresponding notes.
+若某个 todo 包含多个日期，插件会取最晚日期作为到期日，便于记录多次完成的历程。
 
-### Task Organization
+### 任务组织
 
-#### Today's View
+#### 今日视图
 
-The top section shows your daily workflow:
+上方显示日常工作流程：
 
--   **Selected**: Tasks you've chosen to work on today
--   **In Progress**: Tasks you're currently working on
--   **Todo**: All pending tasks
--   **Complete**: Tasks finished today
+-   **Selected**：你挑选的当日任务
+-   **In Progress**：当前正在进行的任务
+-   **Todo**：所有待办
+-   **Complete**：当天完成的任务
 
-#### Planning View
+#### 规划视图
 
-The bottom section helps you plan future work:
+下方帮助安排未来：
 
--   **Future dates**: Tasks scheduled for specific dates
--   **Past**: Overdue tasks that need attention
--   **No Date**: Tasks without due dates
+-   **Future dates**：设置了具体日期的任务
+-   **Past**：逾期待处理任务
+-   **No Date**：未设日期的任务
 
-### Commands and Shortcuts
+### 命令和快捷键
 
-#### Available Commands
+#### 可用命令
 
--   **Toggle Todo**: Convert between different todo statuses
--   **Toggle Ongoing Todo**: Quickly mark tasks as in progress
--   **Complete Line**: Mark the current line's todo as complete
--   **Open Planning View**: Open the task planning interface
--   **Open Report View**: Generate work reports
--   **Auto-expand Due Date**: Convert natural language to actual dates
+-   **Toggle Todo**：在不同 todo 状态之间切换
+-   **Toggle Ongoing Todo**：快速标记任务为进行中
+-   **Complete Line**：将当前行的 todo 标记为完成
+-   **Open Planning View**：打开任务规划界面
+-   **Open Report View**：生成工作报告
+-   **Auto-expand Due Date**：将自然语言转换成具体日期
 
-#### Auto-expand Due Date
+#### 自动展开到期日
 
-Use the auto-expand command (recommend binding to `Alt+.`) to convert natural language:
+将自然语言转换成具体日期（建议绑定 `Alt+.`）：
 
--   `tomorrow` → actual tomorrow's date
--   `next monday` → date of next Monday
--   `in 2 weeks` → date 2 weeks from now
--   `next month` → first day of next month
+-   `tomorrow` → 明天的日期
+-   `next monday` → 下一个周一
+-   `in 2 weeks` → 2 周后的日期
+-   `next month` → 下个月的第一天
 
-### Reports
+### 报告
 
-Generate comprehensive reports of your work:
+生成全面的工作报告：
 
--   **Daily reports**: See what you accomplished each day
--   **Time period reports**: Generate reports for specific date ranges and export as markdown.
+-   **每日报告**：查看每天完成的内容
+-   **周期报告**：按日期区间生成并导出 Markdown
 
-### Settings and Configuration
+### 设置与配置
 
-#### Attribute Configuration
+#### 属性配置
 
-Customize which attributes to use for:
+自定义要使用的属性名：
 
--   Due dates (default: `due`)
--   Completion dates (default: `completed`)
--   Selection marker (default: `selected`)
+-   到期日（默认：`due`）
+-   完成日期（默认：`completed`）
+-   选择标记（默认：`selected`）
 
-#### Folder Settings
+#### 文件夹设置
 
--   **Ignored folders**: Exclude certain folders from task scanning
--   **Archive handling**: Choose whether to include archived todos
+-   **忽略的文件夹**：将某些文件夹排除在扫描范围外
+-   **规划代办文件夹**：指定规划视图在点击“今日”任务时创建的页面所属文件夹（会自动创建）；留空时使用默认每日笔记路径
+-   **归档处理**：决定是否包含归档的 todo
 
-#### Display Options
+#### 显示选项
 
--   **Date formats**: Customize how dates are displayed
--   **Task sorting**: Configure default sorting options
--   **Panel layouts**: Adjust the task board appearance
+-   **日期格式**：自定义日期显示方式
+-   **任务排序**：设置默认排序规则
+-   **面板布局**：调整任务看板的外观
 
-### Tips and Best Practices
+### 小贴士与最佳实践
 
-#### Organizing Your Workflow
+#### 组织工作流程
 
-1. **Start your day** by selecting tasks to work on
-2. **Use statuses** to track progress throughout the day
-3. **Plan ahead** by setting due dates on future tasks
-4. **Review regularly** using the report feature
+1. **开启一天**：先挑选当日要做的任务
+2. **使用状态**：在一天内用状态跟踪进度
+3. **提前规划**：为未来任务设置到期日
+4. **定期复查**：用报告功能回顾
 
-#### Effective Task Management
+#### 高效的任务管理
 
--   Keep todos close to related content in your notes
--   Use consistent attribute naming across your vault
--   Leverage natural language date entry for quick planning
--   Review past due tasks regularly to stay on track
+-   将 todo 贴近相关内容，便于上下文思考
+-   全局保持属性命名一致
+-   利用自然语言设置日期，加速计划
+-   经常复查逾期任务，保持节奏
 
-#### Integration with Other Plugins
+#### 与其他插件的协作
 
-Proletarian Wizard works well with:
+无产阶级巫师可以和以下插件配合使用：
 
--   Daily notes plugins for day-specific planning
--   Calendar plugins for date visualization
--   Project management plugins for larger workflows
+-   每日笔记插件：配合日程规划
+-   日历插件：可视化日期分布
+-   项目管理插件：处理更大规模流程
 
-### Troubleshooting
+### 故障排查
 
-#### Common Issues
+#### 常见问题
 
--   **Tasks not appearing**: Check that your todo syntax is correct
--   **Date parsing errors**: Verify date format or use the auto-expand command
--   **Performance with large vaults**: Consider excluding unnecessary folders
+-   **任务未出现**：确认 todo 语法无误
+-   **日期解析错误**：检查格式或使用自动展开命令
+-   **大型仓库性能问题**：考虑排除不必要文件夹
 
-#### Performance Optimization
+#### 性能优化
 
-For large vaults with many notes:
+对于笔记量大的仓库：
 
-1. Use folder exclusions to limit scanning scope
-2. Archive completed projects to separate folders
-3. Consider splitting very large notes into smaller ones
+1. 使用文件夹排除缩小扫描范围
+2. 将完成项目归档到单独文件夹
+3. 将过大的笔记拆成更小的模块
 
-## Development
+## 开发
 
-### Prerequisites
+### 前置要求
 
--   Node.js 18.x or higher
--   Yarn package manager
--   TypeScript knowledge
+-   Node.js 18.x 或更高
+-   Yarn 包管理器
+-   TypeScript 基础
 
-### Setting Up Development Environment
+### 搭建开发环境
 
-1. **Clone the repository**:
+1. **克隆仓库**：
 
     ```bash
     git clone https://github.com/cfe84/obsidian-pw.git
     cd obsidian-pw
     ```
 
-2. **Install dependencies**:
+2. **安装依赖**：
 
     ```bash
     yarn install
     ```
 
-3. **Run tests**:
+3. **运行测试**：
 
     ```bash
     yarn test
-    # Or with coverage
+    # 或运行覆盖率
     yarn test:coverage
-    # Or in watch mode
+    # 或监听模式
     yarn test:watch
     ```
 
-4. **Build the plugin**:
+4. **构建插件**：
 
     ```bash
     yarn build
     ```
 
-5. **Development with hot reload**:
+5. **热加载开发**：
+
     ```bash
     yarn dev
     ```
 
-### Testing
+### 测试
 
-The project includes _some_ test coverage:
+项目已经提供部分测试覆盖：
 
--   **Unit tests** for core business logic (LineOperations, FileTodoParser)
--   **Integration tests** for component interactions (TodoIndex)
+-   **单元测试**：针对核心业务逻辑（如 `LineOperations`、`FileTodoParser`）
+-   **集成测试**：验证组件交互（如 `TodoIndex`）
 
-Run tests with:
+运行测试：
 
 ```bash
-yarn test           # Run all tests
-yarn test:coverage  # Run with coverage report
-yarn test:watch     # Run in watch mode
+yarn test           # 运行所有测试
+yarn test:coverage  # 输出覆盖率报告
+yarn test:watch     # 监听模式
 ```
 
-### Project Structure
+### 项目结构
 
 ```
 src/
-├── domain/          # Core business logic
-│   ├── LineOperations.ts      # Todo parsing and manipulation
-│   ├── FileTodoParser.ts      # File-level todo parsing
-│   ├── TodoIndex.ts           # Todo management and indexing
+├── domain/          # 核心业务逻辑
+│   ├── LineOperations.ts      # Todo 解析与操作
+│   ├── FileTodoParser.ts      # 文件级 todo 解析
+│   ├── TodoIndex.ts           # Todo 管理与索引
 │   └── ...
-├── ui/              # React components
-├── Commands/        # Obsidian commands
-├── Views/           # Obsidian views and modals
-└── infrastructure/ # Platform adapters
+├── ui/              # React 组件
+├── Commands/        # Obsidian 命令
+├── Views/           # Obsidian 视图与模态窗口
+└── infrastructure/  # 平台适配器
 
 tests/
-├── domain/          # Unit tests for business logic
-├── integration/     # Integration tests
-└── mocks/          # Test utilities and mocks
+├── domain/          # 业务逻辑单元测试
+├── integration/     # 集成测试
+└── mocks/            # 测试工具与 mock
 ```
 
-### Building and Deployment
+### 构建与部署
 
-The build process:
+构建流程：
 
-1. **TypeScript compilation** with strict type checking
-2. **esbuild bundling** for optimized output
-3. **Automated testing** in CI
-4. **Release automation** via GitHub Actions
+1. **TypeScript 编译**，开启严格类型检查
+2. **esbuild 打包**，生成优化输出
+3. **CI 中自动化测试**
+4. **通过 GitHub Actions 发布**
 
-## Contributing
+## 参与贡献
 
-We welcome contributions! Here's how to get started:
+欢迎贡献！以下为入门步骤：
 
-### Reporting Issues
+### 报告问题
 
--   Use the [GitHub Issues](https://github.com/cfe84/obsidian-pw/issues) page
--   Include steps to reproduce the problem
--   Mention your Obsidian version and operating system
+-   使用 [GitHub Issues](https://github.com/cfe84/obsidian-pw/issues)
+-   提供复现步骤
+-   说明 Obsidian 版本与操作系统
 
-### Submitting Changes
+### 提交改动
 
-1. **Fork the repository** on GitHub
-2. **Create a feature branch**: `git checkout -b feature/my-new-feature`
-3. **Write tests** for your changes
-4. **Ensure tests pass**: `yarn test`
-5. **Commit your changes**: `git commit -am 'Add some feature'`
-6. **Push to the branch**: `git push origin feature/my-new-feature`
-7. **Submit a pull request**
+1. **Fork 仓库**
+2. **创建功能分支**：`git checkout -b feature/my-new-feature`
+3. **为改动编写测试**
+4. **确保测试通过**：`yarn test`
+5. **提交改动**：`git commit -am 'Add some feature'`
+6. **推送分支**：`git push origin feature/my-new-feature`
+7. **提交 Pull Request**
 
-### Development Guidelines
+### 开发指南
 
--   **Write tests** for new functionality
--   **Follow TypeScript best practices**
--   **Keep the UI responsive** and accessible
--   **Document new features** in the README
--   **Maintain backward compatibility** when possible
+-   **为新增功能编写测试**
+-   **遵循 TypeScript 最佳实践**
+-   **保持 UI 响应与可访问**
+-   **为新特性更新 README**
+-   **尽量维护向后兼容**
 
-### Areas for Contribution
+### 贡献方向
 
--   **New todo status types** or attributes
--   **UI/UX improvements** for better usability
--   **Performance optimizations** for large vaults
--   **Integration** with other Obsidian plugins
--   **Documentation** and examples
--   **Bug fixes** and stability improvements
+-   **新增 todo 状态或属性**
+-   **优化 UI/UX**
+-   **提升大仓库性能**
+-   **与其他 Obsidian 插件集成**
+-   **补充文档与示例**
+-   **修复 bug 与提升稳定性**
 
-### Code Review Process
+### 代码审核流程
 
-1. All changes go through pull request review
-2. Automated tests must pass
-3. Code coverage should be maintained or improved
-4. Documentation should be updated for user-facing changes
+1. 所有改动通过 Pull Request 审核
+2. 自动化测试必须通过
+3. 覆盖率应保持或提升
+4. 面向用户的变化需同步更新文档
 
-## License
+## 许可证
 
-This project is licensed under the GNU GPLv2 License - see the [LICENSE](LICENSE) file for details.
+本项目采用 GNU GPLv2 许可证，详见 [LICENSE](LICENSE)
 
-## Acknowledgments
+## 致谢
 
--   Built for the [Obsidian](https://obsidian.md) community
--   Inspired by productivity workflows and task management best practices
--   Thanks to all contributors and users who provide feedback and improvements
+-   为 [Obsidian](https://obsidian.md) 社区而建
+-   受高效工作流程与任务管理最佳实践启发
+-   感谢所有贡献者与用户的反馈与改进

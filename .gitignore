@@ -9,6 +9,13 @@
 node_modules
 build
 
+# Other package managers (use npm only)
+yarn.lock
+pnpm-lock.yaml
+bun.lockb
+.yarn/
+.pnpm-store/
+
 # Don't include the compiled main.js file in the repo.
 # They should be uploaded to GitHub releases instead.
 main.js

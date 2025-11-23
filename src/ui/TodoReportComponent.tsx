@@ -6,7 +6,7 @@ import { ILogger } from "src/domain/ILogger";
 import { TodoIndex } from "src/domain/TodoIndex";
 import { PlanningComponentDeps } from "./PlanningComponent";
 import { ProletarianWizardSettings } from "src/domain/ProletarianWizardSettings";
-import { TodoItem, TodoStatus } from "src/domain/TodoItem";
+import { TodoItem, TodoStatus, isTodoCompleted } from "src/domain/TodoItem";
 import { DateTime } from "luxon";
 import { TodoListComponent } from "./TodoListComponent";
 import { ReportExportModal, ExportConfig } from "../Views/ReportExportModal";
@@ -126,7 +126,7 @@ function getDateContainers(minDate: DateTime, numberOfWeeks: number, numberOfMon
 }
 
 function filterTodos(todos: TodoItem<TFile>[]): TodoItem<TFile>[] {
-  return todos.filter(todo => todo.status === TodoStatus.Complete || todo.status === TodoStatus.Canceled);
+  return todos.filter(isTodoCompleted);
 }
 
 function groupTodos(todos: TodoItem<TFile>[], containers: DateContainer[], settings: ProletarianWizardSettings): Container[] {

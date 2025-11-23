@@ -9,11 +9,19 @@ export class FileOperations {
 		this.lineOperations = new LineOperations(settings)
 	}
 
-	private getEOL(content: string): string {
+	/**
+	 * Get end-of-line character(s) from content
+	 * Made static so it can be reused elsewhere
+	 */
+	static getEOL(content: string): string {
     if (content.indexOf("\r\n") >= 0) {
       return "\r\n"
     }
     return "\n"
+  }
+
+	private getEOL(content: string): string {
+		return FileOperations.getEOL(content)
   }
 
   async updateAttributeAsync<T>(todo: TodoItem<T>, attributeName: string, attributeValue: string | boolean | undefined) {

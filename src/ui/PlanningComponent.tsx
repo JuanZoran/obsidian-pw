@@ -1,7 +1,7 @@
 import * as React from "react";
 import { createRoot } from "react-dom/client";
 
-import { TodoItem, TodoStatus, getTodoId } from "../domain/TodoItem";
+import { TodoItem, TodoStatus, getTodoId, isTodoCompleted, isTodoIncomplete } from "../domain/TodoItem";
 import { ILogger } from "../domain/ILogger";
 import { App, TFile} from "obsidian";
 import { DateTime } from "luxon";
@@ -48,7 +48,7 @@ export function PlanningComponent({deps, settings, app}: PlanningComponentProps)
   const [todos, setTodos] = React.useState<TodoItem<TFile>[]>(deps.todoIndex.todos);
   const setPlanningSettings = PlanningSettingsStore.decorateSetterWithSaveSettings(setPlanningSettingsState);
   const { searchParameters, hideEmpty, wipLimit } = planningSettings;
-	const fileOperations = new FileOperations(settings);
+	const fileOperations = React.useMemo(() => new FileOperations(settings), [settings]);
   const createDailyNoteService = () =>
     new DailyNoteService(app, settings.dailyTodoFolder || undefined);
   
@@ -103,7 +103,7 @@ export function PlanningComponent({deps, settings, app}: PlanningComponentProps)
   function getTodosByDate(from: DateTime | null, to: DateTime | null, includeSelected: boolean = false): TodoItem<TFile>[] {
     const dateIsInRange = (date: DateTime | null) => date && (from === null || date >= from) && (to === null || date < to)
     function todoInRange<T>(todo: TodoItem<T>){
-      const isDone = todo.status === TodoStatus.Complete || todo.status === TodoStatus.Canceled;
+      const isDone = isTodoCompleted(todo);
       const isSelected = todo.attributes && !!todo.attributes[settings.selectedAttribute];
       const dueDate = findTodoDate(todo, settings.dueDateAttribute);
       const completedDate = findTodoDate(todo, settings.completedDateAttribute);
@@ -122,7 +122,7 @@ export function PlanningComponent({deps, settings, app}: PlanningComponentProps)
       !findTodoDate(todo, settings.dueDateAttribute)
       && todo.attributes
       && !todo.attributes[settings.selectedAttribute]
-      && todo.status !== TodoStatus.Canceled && todo.status !== TodoStatus.Complete)
+      && isTodoIncomplete(todo))
   }
 
   function findTodo(todoId: string): TodoItem<TFile> | undefined {
@@ -288,8 +288,7 @@ export function PlanningComponent({deps, settings, app}: PlanningComponentProps)
 		yield todoColumn(
       "🕸️",
       "过期",
-      getTodosByDate(null, today).filter(
-        todo => todo.status !== TodoStatus.Canceled && todo.status !== TodoStatus.Complete),
+      getTodosByDate(null, today).filter(isTodoIncomplete),
       true);
       
     let bracketStart = today;

@@ -113,6 +113,20 @@ export class ProletarianWizardSettingsTab extends PluginSettingTab {
 					})
 			);
 
+		new Setting(containerEl)
+			.setName("自动移动昨日未完成代办")
+			.setDesc("打开今日代办时，自动将昨天未完成的代办移动到今日")
+			.addToggle((toggle) =>
+				toggle
+					.setValue(
+						this.plugin.settings.autoMoveIncompleteTodosFromYesterday ?? false
+					)
+					.onChange(async (value) => {
+						this.plugin.settings.autoMoveIncompleteTodosFromYesterday = value;
+						await this.plugin.saveSettings();
+					})
+			);
+
 		new Setting(containerEl).setName("忽略").setHeading();
 
 		// Ignored folders section

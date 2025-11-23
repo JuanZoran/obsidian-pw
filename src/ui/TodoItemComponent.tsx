@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { TodoItem, TodoStatus, getTodoId } from "../domain/TodoItem"
+import { TodoItem, TodoStatus, getTodoId, isTodoCompleted } from "../domain/TodoItem"
 import { MarkdownView, Menu, TFile } from "obsidian"
 import { IDictionary } from "../domain/IDictionary"
 import { TodoSubtasksContainer } from "./TodoSubtasksContainer";
@@ -109,7 +109,7 @@ export interface TodoItemComponentProps {
 export function TodoItemComponent({todo, deps, playSound, dontCrossCompleted, displayPreferences}: TodoItemComponentProps) {
   const app = deps.app;
   const settings = deps.settings;
-	const fileOperations = new FileOperations(settings);
+	const fileOperations = React.useMemo(() => new FileOperations(settings), [settings]);
   const { showTags, showStartTime } = displayPreferences;
 
   async function openFileAsync(file: TFile, line: number, inOtherLeaf: boolean) {
@@ -183,7 +183,7 @@ export function TodoItemComponent({todo, deps, playSound, dontCrossCompleted, di
 
   const isSelectedText = !!todo.attributes[settings.selectedAttribute] ? " 📌" : "";
   const priorityIcon = priorityToIcon(todo.attributes);
-  const completionClassName = (!dontCrossCompleted && (todo.status === TodoStatus.Complete || todo.status === TodoStatus.Canceled))  ? "pw-todo-text-complete" : "";
+  const completionClassName = (!dontCrossCompleted && isTodoCompleted(todo)) ? "pw-todo-text-complete" : "";
 
   const renderUrl = (todoText: string):(string|React.ReactElement)[] => {
     const res: (string|React.ReactElement)[] = [];

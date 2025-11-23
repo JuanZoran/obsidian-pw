@@ -24,3 +24,17 @@ export interface TodoItem<TFile> {
 export function getTodoId<T>(todo: TodoItem<T>) {
   return todo.file.id + "-" + (todo.line || 0) + "-" + todo.text
 }
+
+/**
+ * Check if a todo is completed (either Complete or Canceled status)
+ */
+export function isTodoCompleted<T>(todo: TodoItem<T>): boolean {
+  return todo.status === TodoStatus.Complete || todo.status === TodoStatus.Canceled
+}
+
+/**
+ * Check if a todo is incomplete (not Complete and not Canceled)
+ */
+export function isTodoIncomplete<T>(todo: TodoItem<T>): boolean {
+  return !isTodoCompleted(todo)
+}

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { TodoItem, TodoStatus, getTodoId } from "../domain/TodoItem"
+import { TodoItem, TodoStatus, getTodoId, isTodoCompleted } from "../domain/TodoItem"
 import { App, Menu, TFile } from "obsidian";
 import { FileOperations } from "src/domain/FileOperations";
 import { ILogger } from "src/domain/ILogger";
@@ -39,9 +39,10 @@ export interface TodoSatusComponentProps {
 }
 
 export function TodoStatusComponent({todo, deps, settings, playSound}: TodoSatusComponentProps) {
+  // Reuse FileOperations instance to avoid creating multiple instances
+  const fileOperations = React.useMemo(() => new FileOperations(settings), [settings]);
   
   const addChangeStatusMenuItem = (menu: Menu, status: TodoStatus, label: string) => {
-    const fileOperations: FileOperations = new FileOperations(settings)
 		menu.addItem((item) => {
       item.setTitle(label)
       item.onClick(() => {
@@ -67,13 +68,12 @@ export function TodoStatusComponent({todo, deps, settings, playSound}: TodoSatus
   }
 
   const onclick = (evt: any) => {
-		const fileOperations: FileOperations = new FileOperations(settings)
     if (evt.defaultPrevented) {
       return
     }
     deps.logger.debug(`Changing status on ${getTodoId(todo)}`);
     evt.preventDefault();
-    const wasCompleted = todo.status === TodoStatus.Complete || todo.status === TodoStatus.Canceled
+    const wasCompleted = isTodoCompleted(todo)
     if (!wasCompleted && playSound) {
       playSound.fireAsync("checked").then()
     }

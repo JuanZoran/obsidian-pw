@@ -20,6 +20,7 @@ import { TodoListView } from "./Views/TodoListView";
 import { OpenFileEvent } from "./events/TodoListEvents";
 import { TodoReportView } from "./Views/TodoReportView";
 import { OpenReportCommand } from "./Commands/OpenReportCommand";
+import { OpenTodayCommand } from "./Commands/OpenTodayCommand";
 
 export default class ProletarianWizard extends Plugin {
 	logger: ILogger = new ConsoleLogger(LogLevel.ERROR);
@@ -65,13 +66,6 @@ export default class ProletarianWizard extends Plugin {
 			"current",
 			undefined
 		);
-		const openPlanningReuseCommand = new OpenPlanningCommand(
-			this.app.workspace,
-			"pw.open-planning-new",
-			"Open planning in new tab",
-			"new",
-			undefined
-		);
 		const openNewPlanningCommand = new OpenPlanningCommand(
 			this.app.workspace,
 			"pw.open-planning-new",
@@ -94,6 +88,12 @@ export default class ProletarianWizard extends Plugin {
 			"horizontal"
 		);
 		const openReportCommand = new OpenReportCommand(this.app.workspace);
+		const openTodayCommand = new OpenTodayCommand(
+			this.app,
+			this.settings,
+			"pw.open-today",
+			"Open today todos"
+		);
 		const lineOperations = new LineOperations(this.settings);
 		this.addCommand(
 			new ToggleTodoCommand(lineOperations, this.settings, this.app)
@@ -107,11 +107,13 @@ export default class ProletarianWizard extends Plugin {
 			)
 		);
 		this.addCommand(openPlanningCommand);
-		this.addCommand(openNewPlanningCommand);
 		this.addCommand(openPlanningCurrentCommand);
+		this.addCommand(openNewPlanningCommand);
 		this.addCommand(openPlanningSplitVCommand);
 		this.addCommand(openPlanningSplitHCommand);
 		this.addCommand(openReportCommand);
+		this.addCommand(openTodayCommand);
+		this.logger.info(`Registered command: ${openTodayCommand.id} - ${openTodayCommand.name}`);
 		this.addSettingTab(new ProletarianWizardSettingsTab(this.app, this));
 
 		this.addRibbonIcon("calendar-glyph", "Open planning", (_) => {
@@ -248,11 +250,16 @@ export default class ProletarianWizard extends Plugin {
 	onunload() {}
 
 	async loadSettings() {
+		const loadedData = await this.loadData();
 		this.settings = Object.assign(
 			{},
 			DEFAULT_SETTINGS,
-			await this.loadData()
+			loadedData
 		);
+		// Ensure new settings fields are initialized if missing
+		if (this.settings.autoMoveIncompleteTodosFromYesterday === undefined) {
+			this.settings.autoMoveIncompleteTodosFromYesterday = false;
+		}
 	}
 
 	async saveSettings() {

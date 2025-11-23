@@ -15,6 +15,7 @@ export interface ProletarianWizardSettings {
 	defaultEndHour: string;
 	displayTodayProgressBar: boolean;
 	dailyTodoFolder: string;
+	autoMoveIncompleteTodosFromYesterday: boolean;
 }
 
 export const DEFAULT_SETTINGS: ProletarianWizardSettings = {
@@ -34,4 +35,5 @@ export const DEFAULT_SETTINGS: ProletarianWizardSettings = {
 	defaultEndHour: "17:00",
 	displayTodayProgressBar: true,
 	dailyTodoFolder: "",
+	autoMoveIncompleteTodosFromYesterday: false,
 };

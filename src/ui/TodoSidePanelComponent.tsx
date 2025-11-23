@@ -1,7 +1,7 @@
 import * as React from "react";
 import { createRoot } from "react-dom/client";
 import { App, TFile } from "obsidian";
-import { TodoItem, TodoStatus } from "../domain/TodoItem";
+import { TodoItem, TodoStatus, isTodoIncomplete, isTodoCompleted } from "../domain/TodoItem";
 import { ProletarianWizardSettings } from "../domain/ProletarianWizardSettings";
 import { DateTime } from "luxon";
 import { TodoIndex } from "src/domain/TodoIndex";
@@ -25,21 +25,18 @@ export function TodoSidePanelComponent({deps}: TodoSidePanelComponentProps) {
 
   React.useEffect(() => {
     deps.todoIndex.onUpdateEvent.listen(async (todos: TodoItem<TFile>[]) => {
-      setTodos(todos.filter(todo =>
-        todo.status !== TodoStatus.Complete
-        && todo.status !== TodoStatus.Canceled));
+      setTodos(todos.filter(isTodoIncomplete));
     })
   }, [deps.todoIndex])
 
   function getSelectedTodos(todos: TodoItem<TFile>[]): TodoItem<TFile>[] {
-    return todos.filter(todo => todo.status !== TodoStatus.Complete && todo.status !== TodoStatus.Canceled && !!todo.attributes[settings.selectedAttribute])
+    return todos.filter(todo => isTodoIncomplete(todo) && !!todo.attributes[settings.selectedAttribute])
   }
   
   function getDueTodos(todos: TodoItem<TFile>[]): TodoItem<TFile>[] {
     const todoIsDue = (todo: TodoItem<TFile>) => {
       if (
-        todo.status === TodoStatus.Complete ||
-        todo.status === TodoStatus.Canceled ||
+        isTodoCompleted(todo) ||
         !todo.attributes ||
         !todo.attributes[settings.dueDateAttribute]
       )
